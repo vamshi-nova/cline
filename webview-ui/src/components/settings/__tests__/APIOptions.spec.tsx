@@ -3,10 +3,21 @@ import { describe, it, expect, vi } from "vitest"
 import ApiOptions from "../ApiOptions"
 import { ExtensionStateContextProvider } from "@/context/ExtensionStateContext"
 
+// Define VSCode type for testing
+type VSCodeApi = {
+	postMessage: (message: any) => void
+}
+
+// Add vscode to the global object type
+declare global {
+	// eslint-disable-next-line no-var
+	var vscode: VSCodeApi | undefined
+}
+
 vi.mock("../../../context/ExtensionStateContext", async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
-		...actual,
+		...Object.assign({}, actual),
 		// your mocked methods
 		useExtensionState: vi.fn(() => ({
 			apiConfiguration: {
@@ -25,7 +36,7 @@ describe("ApiOptions Component", () => {
 	const mockPostMessage = vi.fn()
 
 	beforeEach(() => {
-		global.vscode = { postMessage: mockPostMessage } as any
+		global.vscode = { postMessage: mockPostMessage } as VSCodeApi
 	})
 
 	it("renders Requesty API Key input", () => {
@@ -52,7 +63,7 @@ describe("ApiOptions Component", () => {
 vi.mock("../../../context/ExtensionStateContext", async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
-		...actual,
+		...Object.assign({}, actual),
 		// your mocked methods
 		useExtensionState: vi.fn(() => ({
 			apiConfiguration: {
@@ -71,7 +82,7 @@ describe("ApiOptions Component", () => {
 	const mockPostMessage = vi.fn()
 
 	beforeEach(() => {
-		global.vscode = { postMessage: mockPostMessage } as any
+		global.vscode = { postMessage: mockPostMessage } as VSCodeApi
 	})
 
 	it("renders Together API Key input", () => {
@@ -98,7 +109,7 @@ describe("ApiOptions Component", () => {
 vi.mock("../../../context/ExtensionStateContext", async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
-		...actual,
+		...Object.assign({}, actual),
 		// your mocked methods
 		useExtensionState: vi.fn(() => ({
 			apiConfiguration: {
@@ -117,7 +128,7 @@ describe("OpenApiInfoOptions", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks()
-		global.vscode = { postMessage: mockPostMessage }
+		global.vscode = { postMessage: mockPostMessage } as VSCodeApi
 	})
 
 	it("renders OpenAI Supports Images input", () => {
