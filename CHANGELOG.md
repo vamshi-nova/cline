@@ -2,13 +2,8 @@
 
 ## 3.10.0
 
-### Minor Changes
-
 -   73c64d9: Add modal for toggling MCP servers to the chat area
 -   13b6941: Drag and drop of file/folders into cline chat
-
-### Patch Changes
-
 -   dd25195: Fix auto approve state out of sync
 -   0b95ad3: Reduce system prompt size by letting Cline dynamically load MCP documentation only when needed
 -   95120bb: Feature to open basic settings & scroll a section into view with a highlight animation
